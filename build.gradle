@@ -1,0 +1,25 @@
+plugins {
+    id 'eclipse'
+    id 'java-library'
+}
+
+version = '0.0.1' // Placeholder version
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                   'Implementation-Version': project.version)
+    }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '4.5.1'
+}
