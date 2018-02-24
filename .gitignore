@@ -16,3 +16,9 @@
 .settings
 .project
 .classpath
+
+###
+# Others
+###
+
+.DS_Store
