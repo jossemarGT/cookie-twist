@@ -1,0 +1,93 @@
+plugins {
+    // IDE quick setup
+    id 'eclipse'
+    // Built-in gradle tasks and configurations for java libraries
+    id 'java-library'
+    // Built-in gradle tasks and configurations for maven repository publishing
+    id 'maven-publish'
+    // Bintray artifact publishing
+    id 'com.jfrog.bintray' version '1.8.0'
+    // Auto-magic version from SCM (git) metadata
+    id 'net.nemerosa.versioning' version '2.6.1'
+}
+
+group = 'com.jossemargt'
+
+ext {
+    description = 'A Tornado web framework secure cookie port'
+    vcsUrl = 'https://github.com/jossemargt/cookie-twist.git'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
+
+task resolveVersion {
+    if (version == 'unspecified') {
+        version = versioning.info.branchId == 'master' ? versioning.info.tag : "${versioning.info.branchId}-SNAPSHOT"
+    }
+}
+
+jar {
+    dependsOn resolveVersion
+    manifest {
+        attributes('Implementation-Title': project.name,
+                   'Implementation-Version': project.version)
+    }
+}
+
+task sourcesJar(type: Jar) {
+    dependsOn resolveVersion
+    from sourceSets.main.allJava
+    classifier "sources"
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    dependsOn resolveVersion
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+
+publishing {
+    publications {
+        Bintray(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom.withXml {
+                asNode().appendNode('description', project.description)
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_API_KEY')
+    publications = ['Bintray']
+    publish = true
+    pkg {
+        publicDownloadNumbers = true
+        repo = 'jvm-artifacts'
+        name = project.name
+        description = project.description
+        licenses = ['MIT']
+        websiteUrl = project.vcsUrl - '.git'
+        issueTrackerUrl = "${project.vcsUrl.minus('.git')}/issues"
+        vcsUrl = project.vcsUrl
+        version {
+            name = project.version
+            released = new Date()
+            vcsTag = project.version
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '4.5.1'
+}
