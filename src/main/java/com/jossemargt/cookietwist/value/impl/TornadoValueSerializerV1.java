@@ -1,18 +1,18 @@
 /*
  * The MIT License
- * 
+ *
  * Copyright (C) 2018 Jonnatan Jossemar Cordero
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,19 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist;
+package com.jossemargt.cookietwist.value.impl;
 
-import static org.junit.Assert.*;
+import com.jossemargt.cookietwist.value.CookieValueModel;
+import com.jossemargt.cookietwist.value.Serializer;
 
-import org.junit.Test;
+public class TornadoValueSerializerV1 implements Serializer {
 
-public class CookiePotTest {
+    @Override
+    public String serialize(CookieValueModel model) {
+        String value = "";
 
-    @Test public void encodeCookie() {
-        fail("Not yet implemented"); // TODO
+        if (model.getValue() != null) {
+            value = model.getValue();
+        }
+
+        String rawResult = String.format("%s|%d", value, model.getTimestamp());
+
+        StringBuilder result =  new StringBuilder(rawResult);
+
+        if (model.getSignature() != null && !model.getSignature().isEmpty()) {
+            result.append("|").append(model.getSignature());
+        }
+
+        return result.toString();
     }
-    
-    @Test public void decodeCookie() {
-        fail("Not yet implemented"); // TODO
-    }
+
 }

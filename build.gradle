@@ -5,10 +5,14 @@ plugins {
     id 'java-library'
     // Built-in gradle tasks and configurations for maven repository publishing
     id 'maven-publish'
+    // Built-in gradle tasks and configurations for Java code linting
+    id 'findbugs'
     // Bintray artifact publishing
     id 'com.jfrog.bintray' version '1.8.0'
     // Auto-magic version from SCM (git) metadata
     id 'net.nemerosa.versioning' version '2.6.1'
+    // A pretty test result logger 
+    id 'com.adarshr.test-logger' version '1.1.2'
 }
 
 group = 'com.jossemargt'
@@ -25,6 +29,23 @@ repositories {
 dependencies {
     api 'javax.servlet:javax.servlet-api:3.1.0'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
+test {
+    // In the meantime I implement the Library API
+    exclude '**/CookiePotTest*'
+}
+
+testlogger {
+    theme 'mocha'
 }
 
 task resolveVersion {
