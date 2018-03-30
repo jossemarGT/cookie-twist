@@ -21,17 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.value;
+package com.jossemargt.cookietwist.tornado;
 
 import java.util.Date;
 
-public class CookieValueModel {
+/**
+ * The Class CookieModel is plain Java representation of a Tornado Cookie value
+ * string.
+ */
+public class CookieModel {
 
-    private String name, value, signature;
-    private long timestamp; // UNIX epoch timestamp
+    /** The Cookie name. */
+    private String name;
+
+    /** The Cookie plain value string. */
+    private String value;
+
+    /** The Signed Cookie signature string. */
+    private String signature;
+
+    /** The  UNIX epoch timestamp. */
+    private long timestamp;
+
+    /** The signature key version number for Tornado Signed Value V2. */
     private int signatureKeyVersion;
 
-    public CookieValueModel(Builder builder) {
+    /**
+     * Instantiates a new cookie model from its builder.
+     *
+     * @param builder the cookie model builder
+     */
+    public CookieModel(Builder builder) {
         this.name = builder.name;
         this.value = builder.value;
         this.timestamp = builder.timestamp;
@@ -39,15 +59,39 @@ public class CookieValueModel {
         this.signature = builder.signature;
     }
 
+    /**
+     * Instantiate a CookieModel Builder.
+     *
+     * @return the CookieModel Builder
+     */
     public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder {
-        private String name, value, signature;
+    /**
+     * The CookieModel Builder class facilitates  Tornado secure value model
+     * creation regardless the signature and serialization version being used.
+     */
+    public static final class Builder {
+
+        /** The Cookie name. */
+        private String name;
+
+        /** The Cookie plain value string. */
+        private String value;
+
+        /** The Signed Cookie signature string. */
+        private String signature;
+
+        /** The  UNIX epoch timestamp. */
         private long timestamp;
+
+        /** The signature key version number for Tornado Signed Value V2. */
         private int signatureKeyVersion;
 
+        /**
+         * Instantiates a new builder with the CookieModel initial values.
+         */
         private Builder() {
             this.name = "";
             this.value = "";
@@ -55,42 +99,86 @@ public class CookieValueModel {
             this.signatureKeyVersion = 0;
         }
 
+        /**
+         * Sets the CookieModel name.
+         *
+         * @param name the CookieModel name string.
+         * @return the builder
+         */
         public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         * Sets the CookieModel plain value string.
+         *
+         * @param value the CookieModel plain value string
+         * @return the builder
+         */
         public Builder withValue(String value) {
             this.value = value;
             return this;
         }
 
+        /**
+         * Sets the CookieModel signature.
+         *
+         * @param signature the CookieModel signature string
+         * @return the builder
+         */
         public Builder withSignature(String signature) {
             this.signature = signature;
             return this;
         }
 
+        /**
+         * Sets the Cookie UNIX epoch timestamp.
+         *
+         * @param timestamp a Date instance that holds the UNIX epoch timestamp
+         * @return the builder
+         */
         public Builder withTimestamp(Date timestamp) {
             this.timestamp = timestamp.getTime();
             return this;
         }
 
+        /**
+         * Sets the Cookie UNIX epoch timestamp.
+         *
+         * @param timestamp the UNIX epoch timestamp
+         * @return the builder
+         */
         public Builder withTimestamp(long timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
+        /**
+         * Sets the signature key version number. It is only needed for Tornado
+         * signed values version 2.
+         *
+         * @param version the signature key version number
+         * @return the builder
+         */
         public Builder withSignatureKeyVersion(int version) {
             this.signatureKeyVersion = version;
             return this;
         }
 
-        public CookieValueModel build() {
-            return new CookieValueModel(this);
+        /**
+         * Instanteates a new CookieModel.
+         *
+         * @return the cookie model
+         */
+        public CookieModel build() {
+            return new CookieModel(this);
         }
     }
 
     /**
+     * Gets the name string.
+     *
      * @return the name
      */
     public String getName() {
@@ -98,59 +186,71 @@ public class CookieValueModel {
     }
 
     /**
-     * @param name
-     *            the name to set
+     * Sets the name string.
+     *
+     * @param name  the name string to set
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * @return the value
+     * Gets the plain value string.
+     *
+     * @return the plain value string
      */
     public String getValue() {
         return value;
     }
 
     /**
-     * @param value
-     *            the value to set
+     * Sets the plain value string.
+     *
+     * @param value the plain value string to set
      */
     public void setValue(String value) {
         this.value = value;
     }
 
     /**
-     * @return the signature
+     * Gets the signature string.
+     *
+     * @return the signature string
      */
     public String getSignature() {
         return signature;
     }
 
     /**
-     * @param signature
-     *            the signature to set
+     * Sets the signature string.
+     *
+     * @param signature the signature string to set
      */
     public void setSignature(String signature) {
         this.signature = signature;
     }
 
     /**
-     * @return the timestamp
+     * Gets the UNIX epoch timestamp.
+     *
+     * @return the UNIX epoch timestamp
      */
     public long getTimestamp() {
         return timestamp;
     }
 
     /**
-     * @param timestamp
-     *            the timestamp to set
+     * Sets the UNIX epoch timestamp.
+     *
+     * @param timestamp the UNIX epoch timestamp to set
      */
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
     /**
+     * Gets the signature key version number.
+     *
      * @return the signatureKeyVersion
      */
     public int getSignatureKeyVersion() {
@@ -158,8 +258,9 @@ public class CookieValueModel {
     }
 
     /**
-     * @param signatureKeyVersion
-     *            the signatureKeyVersion to set
+     * Sets the signature key version number .
+     *
+     * @param signatureKeyVersion the signatureKeyVersion number to set
      */
     public void setSignatureKeyVersion(int signatureKeyVersion) {
         this.signatureKeyVersion = signatureKeyVersion;

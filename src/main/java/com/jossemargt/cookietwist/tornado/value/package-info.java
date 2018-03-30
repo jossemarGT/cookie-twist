@@ -21,10 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.value;
 
-public interface Serializer {
-
-    String serialize(CookieValueModel model);
-
-}
+/**
+ * Contains interfaces and its implementations for Tornado secure cookie value
+ * serialization.
+ */
+package com.jossemargt.cookietwist.tornado.value;

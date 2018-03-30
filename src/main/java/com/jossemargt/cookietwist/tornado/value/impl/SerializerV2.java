@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.value.impl;
+package com.jossemargt.cookietwist.tornado.value.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import com.jossemargt.cookietwist.value.CookieValueModel;
-import com.jossemargt.cookietwist.value.Serializer;
+import com.jossemargt.cookietwist.tornado.CookieModel;
+import com.jossemargt.cookietwist.tornado.value.Serializer;
 
 public class TornadoValueSerializerV2 implements Serializer {
 
     @Override
-    public String serialize(CookieValueModel model) {
+    public String serialize(CookieModel model) {
         StringBuilder result =  new StringBuilder("2");
 
         result.append("|").append(formatField(model.getSignatureKeyVersion()));

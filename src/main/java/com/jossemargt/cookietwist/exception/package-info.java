@@ -21,12 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.value;
 
-import com.jossemargt.cookietwist.exception.InvalidFormatException;
-
-public interface Deserializer {
-
-    CookieValueModel deserialize(String value) throws InvalidFormatException;
-
-}
+ /**
+ * Contains all the possible Exceptions thrown by cookie-twist library.
+ */
+package com.jossemargt.cookietwist.exception;

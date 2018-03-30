@@ -21,30 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.value.impl;
 
-import com.jossemargt.cookietwist.value.CookieValueModel;
-import com.jossemargt.cookietwist.value.Serializer;
-
-public class TornadoValueSerializerV1 implements Serializer {
-
-    @Override
-    public String serialize(CookieValueModel model) {
-        String value = "";
-
-        if (model.getValue() != null) {
-            value = model.getValue();
-        }
-
-        String rawResult = String.format("%s|%d", value, model.getTimestamp());
-
-        StringBuilder result =  new StringBuilder(rawResult);
-
-        if (model.getSignature() != null && !model.getSignature().isEmpty()) {
-            result.append("|").append(model.getSignature());
-        }
-
-        return result.toString();
-    }
-
-}
+/**
+ * Contains everything related to Tornado Secure Cookies like the signature and
+ * serialization process.
+ */
+package com.jossemargt.cookietwist.tornado;

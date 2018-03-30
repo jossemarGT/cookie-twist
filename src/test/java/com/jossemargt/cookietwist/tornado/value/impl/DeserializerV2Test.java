@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.value.impl;
+package com.jossemargt.cookietwist.tornado.value.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -32,38 +32,47 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.jossemargt.cookietwist.exception.InvalidFormatException;
-import com.jossemargt.cookietwist.value.CookieValueModel;
+import com.jossemargt.cookietwist.tornado.CookieModel;
+import com.jossemargt.cookietwist.tornado.value.impl.DeserializerV2;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-public class TornadoValueDeserializerV1Test {
-    private TornadoValueDeserializerV1 subject;
+public class DeserializerV2Test {
+    private DeserializerV2 subject;
 
     @Before
-    public void setUp() {
-        subject = new TornadoValueDeserializerV1();
+    public void setUp() throws Exception {
+        subject = new DeserializerV2();
     }
 
     @Test
     @Parameters
-    public void testDeserialize(String serializedValue, String expectedValue, String expectedTimestamp,
-            String expectedSignature) throws InvalidFormatException {
-        CookieValueModel model = subject.deserialize(serializedValue);
+    public void testDeserialize(String serializedValue, String expectedName, String expectedValue,
+            String expectedTimestamp, int expectedKeyVersion, String expectedSignature) throws InvalidFormatException {
 
+        CookieModel model = subject.deserialize(serializedValue);
+
+        assertEquals(expectedName, model.getName());
         assertEquals(expectedValue, model.getValue());
         assertEquals(Long.parseLong(expectedTimestamp), model.getTimestamp());
+        assertTrue("Unexpected signature key version", expectedKeyVersion == model.getSignatureKeyVersion());
         assertEquals(expectedSignature, model.getSignature());
     }
 
     @SuppressWarnings("unused")
     private Object parametersForTestDeserialize() {
         return new Object[] {
-                new Object[] { "value|1521518443|the_signature", "value", "1521518443", "the_signature" },
-                new Object[] { "|1521518443|the_signature", "", "1521518443", "the_signature" },
-                new Object[] { "trick4|Str!n€|1521518443|the_signature", "trick4|Str!n€", "1521518443", "the_signature" },
-                new Object[] { "tricky|String|the|revenge|1521518443|the_signature", "tricky|String|the|revenge", "1521518443", "the_signature" }
+                new Object[] {
+                        "2|1:0|10:1521518443|3:one|16:c2ltcGxlIHZhbHVl|the_signature","one","simple value","1521518443", 0, "the_signature"
+                },
+                new Object[] {
+                        "2|1:1|10:1521518443|3:two|0:|the_signature","two","","1521518443",1,"the_signature"
+                },
+                new Object[] {
+                        "2|1:2|10:1521518443|5:three|28:J3wvdW53QG504oKsZCBjaEByJD8=|the_signature","three", "'|/unw@nt€d ch@r$?","1521518443",2,"the_signature"
+                }
         };
     }
 
@@ -80,11 +89,28 @@ public class TornadoValueDeserializerV1Test {
 
     @SuppressWarnings("unused")
     private Object parametersForTestDeserializeInvalidFormatException() {
-        return new Object[] {
-                new Object[] { "value|1521518443" },
-                new Object[] { "value|1521518443|" },
-                new Object[] { "value||the_signature" },
-                new Object[] { "value" }
+        return new Object[]{
+                new Object[] {
+                        "2|1:0|10:1521518443|4:zero|8:c2hvcnQ="
+                },
+                new Object[] {
+                        "2|1:1|10:1521518443|3:one|0:|"
+                },
+                new Object[] {
+                        "2|1:2|10:1521518443|3:two|3:c2hvcnQ=|the_signature"
+                },
+                new Object[]{
+                        "2|1:3|10:1521518443|3:three|8:c2hvcnQ=|the_signature"
+                },
+                new Object[]{
+                        "3|1:4|10:1521518443|4:four|8:c2hvcnQ=|the_signature"
+                },
+                new Object[]{
+                        "2|1:5|10:abcdefghij|4:five|8:c2hvcnQ=|the_signature"
+                },
+                new Object[]{
+                        "2|1:6|10:1521518443|a:six|8:c2hvcnQ=|the_signature"
+                },
         };
     }
 }

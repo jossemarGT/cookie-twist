@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.value.impl;
+package com.jossemargt.cookietwist.tornado.value.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import com.jossemargt.cookietwist.exception.InvalidFormatException;
-import com.jossemargt.cookietwist.value.CookieValueModel;
-import com.jossemargt.cookietwist.value.Deserializer;
+import com.jossemargt.cookietwist.tornado.CookieModel;
+import com.jossemargt.cookietwist.tornado.value.Deserializer;
 
 public class TornadoValueDeserializerV2 implements Deserializer {
 
@@ -36,7 +36,7 @@ public class TornadoValueDeserializerV2 implements Deserializer {
     private static final int COOKIE_FIELD_TOKEN_COUNT = 2;
 
     @Override
-    public CookieValueModel deserialize(String value) throws InvalidFormatException {
+    public CookieModel deserialize(String value) throws InvalidFormatException {
         String []tokens = value.split("\\|");
 
         if (tokens.length != TornadoValueDeserializerV2.COOKIE_VALUE_TOKEN_COUNT) {
@@ -55,7 +55,7 @@ public class TornadoValueDeserializerV2 implements Deserializer {
             throw new InvalidFormatException("Invalid timestamp format, expected UNIX epoch", e);
         }
 
-        CookieValueModel model = CookieValueModel.builder()
+        CookieModel model = CookieModel.builder()
                 .withSignatureKeyVersion(Integer.parseInt(extractFieldValue(tokens[1]), 10))
                 .withTimestamp(timestamp)
                 .withName(extractFieldValue(tokens[3]))

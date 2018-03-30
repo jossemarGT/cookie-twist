@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.value.impl;
+package com.jossemargt.cookietwist.tornado.value.impl;
 
 import com.jossemargt.cookietwist.exception.InvalidFormatException;
-import com.jossemargt.cookietwist.value.CookieValueModel;
-import com.jossemargt.cookietwist.value.Deserializer;
+import com.jossemargt.cookietwist.tornado.CookieModel;
+import com.jossemargt.cookietwist.tornado.value.Deserializer;
 
 public class TornadoValueDeserializerV1 implements Deserializer {
 
     private static final int COOKIE_VALUE_TOKEN_COUNT = 3;
 
     @Override
-    public CookieValueModel deserialize(String value) throws InvalidFormatException {
+    public CookieModel deserialize(String value) throws InvalidFormatException {
         String []tokens = value.split("\\|");
         int tokenCount = tokens.length;
 
@@ -50,7 +50,7 @@ public class TornadoValueDeserializerV1 implements Deserializer {
 
         String signature = tokens[tokenCount - 1];
 
-        CookieValueModel model = CookieValueModel.builder()
+        CookieModel model = CookieModel.builder()
                                     .withValue(valueString)
                                     .withTimestamp(timestamp)
                                     .withSignature(signature)
