@@ -43,19 +43,19 @@ The simplified example:
 import javax.servlet.http.Cookie;
 import com.jossemargt.cookietwist.CookiePot;
 
-public static void main(string args[]){
-    final string mySecretKey = 'like a ninja!';
+public static void main(String[] args){
+    final String mySecretKey = 'like a ninja!';
 
     // Instantiate your Cookie Pot with your secret key
     CookiePot tornadoPot = new CookiePot(mySecretKey);
 
     // Generate a Tornado Signed Secure Cookie (with signing V2 by default);
     Cookie secureCookie = tornadoPot.encodeCookie(new Cookie('the_name', 'a value'));
-    string hashedValue = secureCookie.getValue();
+    String hashedValue = secureCookie.getValue();
 
     // Generate a plain/flat cookie from a  hashed/signed one
     Cookie flatCookie = tornadoPot.decodeCookie(secureCookie);
-    string flatValue = flatCookie.getValue();
+    String flatValue = flatCookie.getValue();
 }
 
 ```

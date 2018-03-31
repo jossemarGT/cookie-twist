@@ -39,10 +39,7 @@ tasks.withType(FindBugs) {
     }
 }
 
-test {
-    // In the meantime I implement the Library API
-    exclude '**/CookiePotTest*'
-}
+compileTestJava.options.encoding = 'UTF-8'
 
 testlogger {
     theme 'mocha'

@@ -21,18 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.tornado.value.impl;
+package com.jossemargt.cookietwist.tornado.transform.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import com.jossemargt.cookietwist.tornado.CookieModel;
-import com.jossemargt.cookietwist.tornado.value.Serializer;
+import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
+import com.jossemargt.cookietwist.tornado.transform.TornadoCookieValueSerializer;
 
-public class TornadoValueSerializerV2 implements Serializer {
+/**
+ * The Class V2TornadoCookieValueSerializer transforms a {@link TornadoCookieValue} object into its
+ * Tornado secure cookie value string representation with the format version 2.
+ */
+public class V2TornadoCookieValueSerializer implements TornadoCookieValueSerializer {
 
+    /* (non-Javadoc)
+     * @see com.jossemargt.cookietwist.tornado.transform.TornadoCookieValueSerializer#serialize
+     */
     @Override
-    public String serialize(CookieModel model) {
+    public String serialize(TornadoCookieValue model) {
         StringBuilder result =  new StringBuilder("2");
 
         result.append("|").append(formatField(model.getSignatureKeyVersion()));
@@ -47,21 +54,48 @@ public class TornadoValueSerializerV2 implements Serializer {
         return result.toString();
     }
 
+    /**
+     * Encodes the given string into a base64 one.
+     *
+     * @param value the string to encode
+     * @return the base64 encoded string
+     */
     private String encodeValue(String value) {
         if (value == null) {
             value = "";
         }
-        return Base64.getEncoder().encodeToString(value.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder()
+                     .encodeToString(value.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Formats the given integer number as String following the "length:field"
+     * pattern.
+     *
+     * @param field the integer number to format
+     * @return the formated string
+     */
     private String formatField(int field) {
         return formatField(Integer.toString(field));
     }
 
+    /**
+     * Formats the given long number as String following the "length:field"
+     * pattern.
+     *
+     * @param field the long number to format
+     * @return the formated string
+     */
     private String formatField(long field) {
         return formatField(Long.toString(field));
     }
 
+    /**
+     * Formats the given string following the "length:field" pattern.
+     *
+     * @param field the value string to format
+     * @return the formated string
+     */
     private String formatField(String field) {
         return String.format("%d:%s", field.length(), field);
     }

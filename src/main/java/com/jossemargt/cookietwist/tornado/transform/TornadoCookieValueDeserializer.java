@@ -21,38 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.tornado.value;
+package com.jossemargt.cookietwist.tornado.transform;
 
 import com.jossemargt.cookietwist.exception.InvalidFormatException;
-import com.jossemargt.cookietwist.tornado.CookieModel;
+import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
 
 /**
- * A Tornado Deserializer object transforms the Tornado secure cookie value
- * String into a {@link CookieModel}.
+ * A Tornado TornadoCookieValueDeserializer object transforms the Tornado secure cookie value
+ * String into a {@link TornadoCookieValue}.
  *
  * <p>
  * Due some Tornado secure value string format rules, the de-serialization
  * process could throw a {@link InvalidFormatException}. For example in the
  * <code>"2|1:0|10:1521518443|3:foo|4:YmFy|the_signature"</code> secure cookie
  * value String, each field length must match with the leading number.
- * </p>
  *
  * <p>
  * <strong>Note:</strong> The cookie value signature integrity should checked by
- * another object before transforming it into a {@link CookieModel}.
- * </p>
+ * another object before transforming it into a {@link TornadoCookieValue}.
  */
-public interface Deserializer {
+public interface TornadoCookieValueDeserializer {
 
     /**
      * Transforms a Tornado secure cookie value String into a
-     * {@link CookieModel}.
+     * {@link TornadoCookieValue}.
      *
      * @param value the Tornado secure cookie value String
      * @return the cookie value model
      * @throws InvalidFormatException if the secure cookie value String does not
      *                                comply with a format rule.
      */
-    CookieModel deserialize(String value) throws InvalidFormatException;
+    TornadoCookieValue deserialize(String value);
 
 }

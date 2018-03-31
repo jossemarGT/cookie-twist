@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.tornado.value.impl;
+package com.jossemargt.cookietwist.tornado.transform.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -32,19 +32,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.jossemargt.cookietwist.exception.InvalidFormatException;
-import com.jossemargt.cookietwist.tornado.CookieModel;
-import com.jossemargt.cookietwist.tornado.value.impl.DeserializerV2;
+import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
+import com.jossemargt.cookietwist.tornado.transform.impl.V2TornadoCookieValueDeserializer;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-public class DeserializerV2Test {
-    private DeserializerV2 subject;
+public class V2TornadoCookieValueDeserializerTest {
+    private V2TornadoCookieValueDeserializer subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new DeserializerV2();
+        subject = new V2TornadoCookieValueDeserializer();
     }
 
     @Test
@@ -52,7 +52,7 @@ public class DeserializerV2Test {
     public void testDeserialize(String serializedValue, String expectedName, String expectedValue,
             String expectedTimestamp, int expectedKeyVersion, String expectedSignature) throws InvalidFormatException {
 
-        CookieModel model = subject.deserialize(serializedValue);
+        TornadoCookieValue model = subject.deserialize(serializedValue);
 
         assertEquals(expectedName, model.getName());
         assertEquals(expectedValue, model.getValue());

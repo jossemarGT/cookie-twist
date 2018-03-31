@@ -21,42 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.tornado.value;
-
-import com.jossemargt.cookietwist.tornado.CookieModel;
 
 /**
- * A Tornado Serializer object handles the {@link CookieModel} transformation
- * process from a plain Java object into its String representation as a Tornado
- * secure cookie value.
+ * Contains the implementations for each Tornado secure cookie value
+ * serialization and de-serialization version.
  *
  * <p>
- * Based on the required version the Tornado Serializer should apply different
- * formats, as for example a Cookie with name <em>foo</em>, content <em>bar</em>
- * issued with timestamp <em>1521518443</em> could have the following Tornado
+ * As for example a Cookie with name <em>foo</em>, content <em>bar</em> issued
+ * with timestamp <em>1521518443</em> could have the following Tornado
  * representations:
- * </p>
  *
  * <ul>
- *  <li><code>"bar|1521518443|the_signature"</code> for version 1</li>
+ *  <li><code>"bar|1521518443|the_signature"</code> for version 1
  *  <li><code>"2|1:0|10:1521518443|3:foo|4:YmFy|the_signature"</code> for
- *  version 2</li>
+ *  version 2
  * </ul>
  *
  * <p>
- * <strong>Note:</strong> The cookie value signature should be calculated by a
- * tornado.Hasher
- * </p>
+ * Both String representations will have a similar CookieModel.
  */
-public interface Serializer {
-
-    /**
-     * Transforms a {@link CookieModel} into a Tornado secure cookie value
-     * String.
-     *
-     * @param model the Tornado Cookie object representation
-     * @return the Tornado secure cookie value String
-     */
-    String serialize(CookieModel model);
-
-}
+package com.jossemargt.cookietwist.tornado.transform.impl;

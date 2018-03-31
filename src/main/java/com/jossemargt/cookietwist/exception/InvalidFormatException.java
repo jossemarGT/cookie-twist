@@ -24,14 +24,18 @@
 package com.jossemargt.cookietwist.exception;
 
 /**
- * The Class InvalidFormatException is meant to describe any CookieValue Model
+ * The Class InvalidFormatException is meant to describe any CookieValue model
  * de-serialization fault, mostly related to String formatting, numeric parsing
- * or un-expected amount of String tokens.
+ * or unexpected amount of String tokens.
  */
-@SuppressWarnings("serial")
-public class InvalidFormatException extends Exception {
+public class InvalidFormatException extends RuntimeException {
 
     /**
+	 * Serial Version unique identifier constant
+	 */
+	private static final long serialVersionUID = 6562287543509308822L;
+
+	/**
      * Instantiates a new invalid format exception without message string or
      * cause.
      */
@@ -54,17 +58,17 @@ public class InvalidFormatException extends Exception {
      * describing the occurrence and the Exception that triggered it.
      *
      * @param message the description of the occurrence.
-     * @param cause the Exception which triggerd this one.
+     * @param cause the Exception which triggered this one.
      */
     public InvalidFormatException(String message, Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Instantiates a new invalid format exception whith the one that triggered
+     * Instantiates a new invalid format exception with the one that triggered
      * it.
      *
-     * @param cause the Exception which triggerd this one.
+     * @param cause the Exception which triggered this one.
      */
     public InvalidFormatException(Throwable cause) {
         super(cause);

@@ -21,30 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.tornado.value.impl;
+package com.jossemargt.cookietwist.tornado.transform;
 
-import com.jossemargt.cookietwist.tornado.CookieModel;
-import com.jossemargt.cookietwist.tornado.value.Serializer;
+import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
 
-public class TornadoValueSerializerV1 implements Serializer {
+/**
+ * A Tornado TornadoCookieValueSerializer object transforms any {@link TornadoCookieValue} instance into
+ * its Tornado secure cookie value string representation.
+ *
+ * <p>
+ * <strong>Note:</strong> The cookie value signature should be calculated by
+ * another object.
+ */
+public interface TornadoCookieValueSerializer {
 
-    @Override
-    public String serialize(CookieModel model) {
-        String value = "";
-
-        if (model.getValue() != null) {
-            value = model.getValue();
-        }
-
-        String rawResult = String.format("%s|%d", value, model.getTimestamp());
-
-        StringBuilder result =  new StringBuilder(rawResult);
-
-        if (model.getSignature() != null && !model.getSignature().isEmpty()) {
-            result.append("|").append(model.getSignature());
-        }
-
-        return result.toString();
-    }
+    /**
+     * Transforms a {@link TornadoCookieValue} into a Tornado secure cookie value
+     * String.
+     *
+     * @param model the Tornado Cookie object representation
+     * @return the Tornado secure cookie value String
+     */
+    String serialize(TornadoCookieValue model);
 
 }

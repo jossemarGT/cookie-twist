@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist.tornado.value.impl;
+package com.jossemargt.cookietwist.tornado.transform.impl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,26 +29,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.jossemargt.cookietwist.tornado.CookieModel;
-import com.jossemargt.cookietwist.tornado.value.impl.SerializerV2;
+import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
+import com.jossemargt.cookietwist.tornado.transform.impl.V2TornadoCookieValueSerializer;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 @RunWith(JUnitParamsRunner.class)
-public class SerializerV2Test {
-    private SerializerV2 subject;
+public class V2TornadoCookieValueSerializerTest {
+    private V2TornadoCookieValueSerializer subject;
 
     @Before
     public void setUp() {
-        subject = new SerializerV2();
+        subject = new V2TornadoCookieValueSerializer();
     }
 
 
     @Test
     @Parameters
     public void testSerialize(String name, String value, String timestamp, String signature, Integer keyVersion, String expectation) {
-        CookieModel model = CookieModel.builder()
+        TornadoCookieValue model = TornadoCookieValue.builder()
                 .withName(name)
                 .withValue(value)
                 .withSignature(signature)

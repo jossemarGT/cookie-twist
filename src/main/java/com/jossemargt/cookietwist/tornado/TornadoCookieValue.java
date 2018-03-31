@@ -26,10 +26,10 @@ package com.jossemargt.cookietwist.tornado;
 import java.util.Date;
 
 /**
- * The Class CookieModel is plain Java representation of a Tornado Cookie value
- * string.
+ * The Class TornadoCookieValue is plain Java representation of a Tornado cookie
+ * value string.
  */
-public class CookieModel {
+public class TornadoCookieValue {
 
     /** The Cookie name. */
     private String name;
@@ -49,9 +49,9 @@ public class CookieModel {
     /**
      * Instantiates a new cookie model from its builder.
      *
-     * @param builder the cookie model builder
+     * @param builder the TornadoCookieValueBuilder
      */
-    public CookieModel(Builder builder) {
+    private TornadoCookieValue(TornadoCookieValueBuilder builder) {
         this.name = builder.name;
         this.value = builder.value;
         this.timestamp = builder.timestamp;
@@ -60,19 +60,19 @@ public class CookieModel {
     }
 
     /**
-     * Instantiate a CookieModel Builder.
+     * Instantiate a TornadoCookieValueBuilder.
      *
-     * @return the CookieModel Builder
+     * @return the TornadoCookieValueBuilder
      */
-    public static Builder builder() {
-        return new Builder();
+    public static TornadoCookieValueBuilder builder() {
+        return new TornadoCookieValueBuilder();
     }
 
     /**
      * The CookieModel Builder class facilitates  Tornado secure value model
      * creation regardless the signature and serialization version being used.
      */
-    public static final class Builder {
+    public static final class TornadoCookieValueBuilder {
 
         /** The Cookie name. */
         private String name;
@@ -92,7 +92,7 @@ public class CookieModel {
         /**
          * Instantiates a new builder with the CookieModel initial values.
          */
-        private Builder() {
+        private TornadoCookieValueBuilder() {
             this.name = "";
             this.value = "";
             this.timestamp = new Date().getTime();
@@ -105,7 +105,7 @@ public class CookieModel {
          * @param name the CookieModel name string.
          * @return the builder
          */
-        public Builder withName(String name) {
+        public TornadoCookieValueBuilder withName(String name) {
             this.name = name;
             return this;
         }
@@ -116,7 +116,7 @@ public class CookieModel {
          * @param value the CookieModel plain value string
          * @return the builder
          */
-        public Builder withValue(String value) {
+        public TornadoCookieValueBuilder withValue(String value) {
             this.value = value;
             return this;
         }
@@ -127,7 +127,7 @@ public class CookieModel {
          * @param signature the CookieModel signature string
          * @return the builder
          */
-        public Builder withSignature(String signature) {
+        public TornadoCookieValueBuilder withSignature(String signature) {
             this.signature = signature;
             return this;
         }
@@ -138,7 +138,7 @@ public class CookieModel {
          * @param timestamp a Date instance that holds the UNIX epoch timestamp
          * @return the builder
          */
-        public Builder withTimestamp(Date timestamp) {
+        public TornadoCookieValueBuilder withTimestamp(Date timestamp) {
             this.timestamp = timestamp.getTime();
             return this;
         }
@@ -149,7 +149,7 @@ public class CookieModel {
          * @param timestamp the UNIX epoch timestamp
          * @return the builder
          */
-        public Builder withTimestamp(long timestamp) {
+        public TornadoCookieValueBuilder withTimestamp(long timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -161,7 +161,7 @@ public class CookieModel {
          * @param version the signature key version number
          * @return the builder
          */
-        public Builder withSignatureKeyVersion(int version) {
+        public TornadoCookieValueBuilder withSignatureKeyVersion(int version) {
             this.signatureKeyVersion = version;
             return this;
         }
@@ -171,8 +171,8 @@ public class CookieModel {
          *
          * @return the cookie model
          */
-        public CookieModel build() {
-            return new CookieModel(this);
+        public TornadoCookieValue build() {
+            return new TornadoCookieValue(this);
         }
     }
 

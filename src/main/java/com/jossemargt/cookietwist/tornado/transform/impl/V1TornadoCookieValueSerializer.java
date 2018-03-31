@@ -21,9 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.jossemargt.cookietwist.tornado.transform.impl;
+
+import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
+import com.jossemargt.cookietwist.tornado.transform.TornadoCookieValueSerializer;
 
 /**
- * Contains interfaces and its implementations for Tornado secure cookie value
- * serialization.
+ * The Class V1TornadoCookieValueSerializer transforms a {@link TornadoCookieValue} object into its
+ * Tornado secure cookie value string representation with the format version 1.
  */
-package com.jossemargt.cookietwist.tornado.value;
+public class V1TornadoCookieValueSerializer implements TornadoCookieValueSerializer {
+
+    /* (non-Javadoc)
+     * @see com.jossemargt.cookietwist.tornado.transform.TornadoCookieValueSerializer#serialize
+     */
+    @Override
+    public String serialize(TornadoCookieValue model) {
+        String value = "";
+
+        if (model.getValue() != null) {
+            value = model.getValue();
+        }
+
+        String result = String.format("%s|%d", value, model.getTimestamp());
+
+        if (model.getSignature() != null && !model.getSignature().isEmpty()) {
+            result = result + "|" + model.getSignature();
+        }
+
+        return result;
+    }
+
+}
