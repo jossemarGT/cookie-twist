@@ -27,8 +27,8 @@ import com.jossemargt.cookietwist.exception.InvalidFormatException;
 import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
 
 /**
- * A Tornado TornadoCookieValueDeserializer object transforms the Tornado secure cookie value
- * String into a {@link TornadoCookieValue}.
+ * A Tornado TornadoCookieValueDeserializer object transforms the Tornado secure
+ * cookie value String into a {@link TornadoCookieValue}.
  *
  * <p>
  * Due some Tornado secure value string format rules, the de-serialization
@@ -46,10 +46,12 @@ public interface TornadoCookieValueDeserializer {
      * Transforms a Tornado secure cookie value String into a
      * {@link TornadoCookieValue}.
      *
-     * @param value the Tornado secure cookie value String
+     * @param value
+     *            the Tornado secure cookie value String
      * @return the cookie value model
-     * @throws InvalidFormatException if the secure cookie value String does not
-     *                                comply with a format rule.
+     * @throws InvalidFormatException
+     *             if the secure cookie value String does not comply with a format
+     *             rule.
      */
     TornadoCookieValue deserialize(String value);
 

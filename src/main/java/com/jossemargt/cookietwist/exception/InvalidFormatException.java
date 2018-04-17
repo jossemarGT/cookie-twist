@@ -31,44 +31,46 @@ package com.jossemargt.cookietwist.exception;
 public class InvalidFormatException extends RuntimeException {
 
     /**
-	 * Serial Version unique identifier constant
-	 */
-	private static final long serialVersionUID = 6562287543509308822L;
+     * Serial Version unique identifier constant.
+     */
+    private static final long serialVersionUID = 6562287543509308822L;
 
-	/**
-     * Instantiates a new invalid format exception without message string or
-     * cause.
+    /**
+     * Instantiates a new invalid format exception without message string or cause.
      */
     public InvalidFormatException() {
         super();
     }
 
     /**
-     * Instantiates a new invalid format exception with a string message
-     * describing the occurrence.
+     * Instantiates a new invalid format exception with a string message describing
+     * the occurrence.
      *
-     * @param message the description of the occurrence.
+     * @param message
+     *            the description of the occurrence.
      */
     public InvalidFormatException(String message) {
         super(message);
     }
 
     /**
-     * Instantiates a new invalid format exception with a string message
-     * describing the occurrence and the Exception that triggered it.
+     * Instantiates a new invalid format exception with a string message describing
+     * the occurrence and the Exception that triggered it.
      *
-     * @param message the description of the occurrence.
-     * @param cause the Exception which triggered this one.
+     * @param message
+     *            the description of the occurrence.
+     * @param cause
+     *            the Exception which triggered this one.
      */
     public InvalidFormatException(String message, Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Instantiates a new invalid format exception with the one that triggered
-     * it.
+     * Instantiates a new invalid format exception with the one that triggered it.
      *
-     * @param cause the Exception which triggered this one.
+     * @param cause
+     *            the Exception which triggered this one.
      */
     public InvalidFormatException(Throwable cause) {
         super(cause);
