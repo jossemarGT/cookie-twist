@@ -1,5 +1,4 @@
 language: java
-script: ./gradlew build
 deploy:
   - provider: script
     script: ./gradlew -Pversion=$TRAVIS_TAG bintrayUpload
