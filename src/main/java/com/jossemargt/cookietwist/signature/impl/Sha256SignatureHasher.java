@@ -55,7 +55,7 @@ public class Sha256SignatureHasher extends SignatureHasher {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.jossemargt.cookietwist.signature.SignatureHasher#init()
      */
     @Override

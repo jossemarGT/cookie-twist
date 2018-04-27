@@ -23,7 +23,6 @@
  */
 package com.jossemargt.cookietwist.tornado.transform;
 
-import com.jossemargt.cookietwist.exception.InvalidFormatException;
 import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
 
 /**
@@ -32,9 +31,11 @@ import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
  *
  * <p>
  * Due some Tornado secure value string format rules, the de-serialization
- * process could throw a {@link InvalidFormatException}. For example in the
- * <code>"2|1:0|10:1521518443|3:foo|4:YmFy|the_signature"</code> secure cookie
- * value String, each field length must match with the leading number.
+ * process could throw a unchecked
+ * {@see com.jossemargt.cookietwist.exception.InvalidFormatException}. For
+ * example in the <code>"2|1:0|10:1521518443|3:foo|4:YmFy|the_signature"</code>
+ * secure cookie value String, each field length must match with the leading
+ * number.
  *
  * <p>
  * <strong>Note:</strong> The cookie value signature integrity should checked by
@@ -49,7 +50,7 @@ public interface TornadoCookieValueDeserializer {
      * @param value
      *            the Tornado secure cookie value String
      * @return the cookie value model
-     * @throws InvalidFormatException
+     * @throws com.jossemargt.cookietwist.exception.InvalidFormatException
      *             if the secure cookie value String does not comply with a format
      *             rule.
      */

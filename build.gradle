@@ -7,6 +7,7 @@ plugins {
     id 'maven-publish'
     // Built-in gradle tasks and configurations for Java code linting
     id 'findbugs'
+    id 'checkstyle'
     // Bintray artifact publishing
     id 'com.jfrog.bintray' version '1.8.0'
     // Auto-magic version from SCM (git) metadata
@@ -30,13 +31,6 @@ dependencies {
     api 'javax.servlet:javax.servlet-api:3.1.0'
     testImplementation 'junit:junit:4.12'
     testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
-}
-
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled false
-        html.enabled true
-    }
 }
 
 compileTestJava.options.encoding = 'UTF-8'
@@ -110,3 +104,5 @@ bintray {
 task wrapper(type: Wrapper) {
   gradleVersion = '4.7'
 }
+
+apply from: 'lint.gradle'

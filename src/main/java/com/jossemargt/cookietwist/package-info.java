@@ -21,12 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.jossemargt.cookietwist;
-
 /**
- * @author Jonnatan Jossemar Cordero
- *
+ * cookie-twist library package.
  */
-public class CookiePot {
-
-}
+package com.jossemargt.cookietwist;
