@@ -12,7 +12,7 @@ plugins {
     id 'com.jfrog.bintray' version '1.8.0'
     // Auto-magic version from SCM (git) metadata
     id 'net.nemerosa.versioning' version '2.6.1'
-    // A pretty test result logger 
+    // A pretty test result logger
     id 'com.adarshr.test-logger' version '1.1.2'
 }
 

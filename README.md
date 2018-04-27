@@ -5,7 +5,7 @@
 
 The [Tornado web framework](https://github.com/tornadoweb/tornado) even from
 early releases goes beyond setting the cookies' [secure attribute  flag](https://tools.ietf.org/html/rfc6265.html#section-5.2.5)
-by [symmetric  signing](http://www.tornadoweb.org/en/stable/guide/security.html)
+by [symmetric signing](http://www.tornadoweb.org/en/stable/guide/security.html#cookies-and-secure-cookies)
 its value in order to prevent forgery. `cookie-twist` library aims to
 integrate the same behavior in Java by composing a plain old [javax.servlet.http.Cookie](https://docs.oracle.com/javaee/6/api/javax/servlet/http/Cookie.html)
 object.
