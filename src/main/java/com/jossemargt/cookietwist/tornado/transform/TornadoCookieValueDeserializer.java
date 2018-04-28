@@ -26,8 +26,8 @@ package com.jossemargt.cookietwist.tornado.transform;
 import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
 
 /**
- * A Tornado TornadoCookieValueDeserializer object transforms the Tornado secure
- * cookie value String into a {@link TornadoCookieValue}.
+ * A TornadoCookieValueDeserializer object transforms the Tornado secure cookie
+ * value String into a {@link TornadoCookieValue}.
  *
  * <p>
  * Due some Tornado secure value string format rules, the de-serialization

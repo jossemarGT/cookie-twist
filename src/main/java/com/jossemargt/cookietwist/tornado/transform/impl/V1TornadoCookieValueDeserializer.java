@@ -29,25 +29,36 @@ import com.jossemargt.cookietwist.tornado.TornadoCookieValue.TornadoCookieValueB
 import com.jossemargt.cookietwist.tornado.transform.TornadoCookieValueDeserializer;
 
 /**
- * The Class V1TornadoCookieValueDeserializer instantiate a {@link TornadoCookieValue} from a Tornado
- * secure cookie value string using the version 1 format.
+ * The Class V1TornadoCookieValueDeserializer instantiate a
+ * {@link TornadoCookieValue} from a Tornado secure cookie value string using
+ * the version 1 format.
  */
 public class V1TornadoCookieValueDeserializer implements TornadoCookieValueDeserializer {
 
-    /** The Constant COOKIE_VALUE_TOKEN_MIN_COUNT holds the minimal field amount
-     * expected in a Tornado secure cookie value string (V1). */
+    /**
+     * The Constant COOKIE_VALUE_TOKEN_MIN_COUNT holds the minimal field amount
+     * expected in a Tornado secure cookie value string (V1).
+     */
     private static final int COOKIE_VALUE_TOKEN_MIN_COUNT = 3;
 
-    /** The Constant COOKIE_FIELD_SIGNATURE_REVERSE_POS holds the signature
-     * field position from the end to the start. */
+    /**
+     * The Constant COOKIE_FIELD_SIGNATURE_REVERSE_POS holds the signature field
+     * position from the end to the start.
+     */
     private static final int COOKIE_FIELD_SIGNATURE_REVERSE_POS = 0;
 
-    /** The Constant COOKIE_FIELD_TIMESTAMP_REVERSE_POS holds the timestamp
-     * field position from the end to the start. */
+    /**
+     * The Constant COOKIE_FIELD_TIMESTAMP_REVERSE_POS holds the timestamp field
+     * position from the end to the start.
+     */
     private static final int COOKIE_FIELD_TIMESTAMP_REVERSE_POS = 1;
 
-    /* (non-Javadoc)
-     * @see com.jossemargt.cookietwist.tornado.transform.TornadoCookieValueDeserializer#deserialize
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.jossemargt.cookietwist.tornado.transform.TornadoCookieValueDeserializer#
+     * deserialize
      */
     @Override
     public TornadoCookieValue deserialize(String value) {
@@ -58,8 +69,7 @@ public class V1TornadoCookieValueDeserializer implements TornadoCookieValueDeser
         int tokenCount = tokens.length;
 
         if (tokenCount < V1TornadoCookieValueDeserializer.COOKIE_VALUE_TOKEN_MIN_COUNT) {
-            throw new InvalidFormatException(
-                    String.format("Invalid field amount, got %d", tokenCount));
+            throw new InvalidFormatException(String.format("Invalid field quantity: %d", tokenCount));
         }
 
         int offset;
@@ -77,7 +87,7 @@ public class V1TornadoCookieValueDeserializer implements TornadoCookieValueDeser
                 try {
                     timestamp = Long.parseLong(field, 10);
                 } catch (NumberFormatException e) {
-                    throw new InvalidFormatException("Invalid timestamp", e);
+                    throw new InvalidFormatException(String.format("Invalid timestamp format: '%s'", field), e);
                 }
                 modelBuilder.withTimestamp(timestamp);
                 break;

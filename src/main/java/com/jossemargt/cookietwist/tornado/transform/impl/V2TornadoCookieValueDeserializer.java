@@ -98,7 +98,7 @@ public class V2TornadoCookieValueDeserializer implements TornadoCookieValueDeser
         String[] tokens = value.split("\\|");
 
         if (tokens.length < V2TornadoCookieValueDeserializer.COOKIE_VALUE_TOKEN_COUNT) {
-            throw new InvalidFormatException(String.format("Invalid field amount. Expected %d, got %d",
+            throw new InvalidFormatException(String.format("Invalid field quantity. Expected %d, got %d",
                     V2TornadoCookieValueDeserializer.COOKIE_VALUE_TOKEN_COUNT, tokens.length));
         }
 
@@ -110,14 +110,14 @@ public class V2TornadoCookieValueDeserializer implements TornadoCookieValueDeser
             switch (i) {
             case COOKIE_FIELD_VERSION_POS:
                 if (!String.valueOf(TORNADO_SECURE_COOKIE_VERSION).equals(field)) {
-                    throw new InvalidFormatException(String.format("Invalid version '%s'", field));
+                    throw new InvalidFormatException(String.format("Invalid format version '%s'", field));
                 }
                 break;
             case COOKIE_FIELD_KEYVERSION_POS:
                 builder.withSignatureKeyVersion(extractInteger(field));
                 break;
             case COOKIE_FIELD_TIMESTAMP_POS:
-                builder.withTimestamp(extractLong(field));
+                builder.withTimestamp(extractTimestamp(field));
                 break;
             case COOKIE_FIELD_NAME_POS:
                 builder.withName(extractString(field));
@@ -144,17 +144,18 @@ public class V2TornadoCookieValueDeserializer implements TornadoCookieValueDeser
      *            the raw field string
      * @return the long enclosed in the field format
      * @throws InvalidFormatException
-     *             when the value does not comply with a numberic format, the field
+     *             when the value does not comply with a numeric format, the field
      *             does not comply with the "length:value" format or the value
      *             length does not match with the given one.
      */
-    private long extractLong(String field) throws InvalidFormatException {
+    private long extractTimestamp(String field) throws InvalidFormatException {
         long result;
+        String fieldValue = extractString(field);
 
         try {
-            result = Long.parseLong(extractString(field), 10);
+            result = Long.parseLong(fieldValue, 10);
         } catch (NumberFormatException e) {
-            throw new InvalidFormatException("Invalid numeric field format", e);
+            throw new InvalidFormatException(String.format("Invalid timestamp field format: %s", fieldValue), e);
         }
 
         return result;
@@ -174,11 +175,12 @@ public class V2TornadoCookieValueDeserializer implements TornadoCookieValueDeser
      */
     private int extractInteger(String field) throws InvalidFormatException {
         int result;
+        String fieldValue = extractString(field);
 
         try {
-            result = Integer.parseInt(extractString(field), 10);
+            result = Integer.parseInt(fieldValue, 10);
         } catch (NumberFormatException e) {
-            throw new InvalidFormatException("Invalid numeric field format", e);
+            throw new InvalidFormatException(String.format("Invalid numeric field format: %s", fieldValue), e);
         }
 
         return result;
@@ -216,8 +218,8 @@ public class V2TornadoCookieValueDeserializer implements TornadoCookieValueDeser
         String fieldValue = tokens[1];
 
         if (fieldValue.length() != expectedLength) {
-            throw new InvalidFormatException(
-                    String.format("Field length missmatch. Expected %d, got %d", expectedLength, fieldValue.length()));
+            throw new InvalidFormatException(String.format("Field length mismatch. Expected %d characters, got %d",
+                    expectedLength, fieldValue.length()));
         }
 
         return fieldValue;
