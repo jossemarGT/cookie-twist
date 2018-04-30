@@ -26,13 +26,13 @@ package com.jossemargt.cookietwist.tornado.transform;
 import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
 
 /**
- * A Tornado TornadoCookieValueDeserializer object transforms the Tornado secure
- * cookie value String into a {@link TornadoCookieValue}.
+ * A TornadoCookieValueDeserializer object transforms the Tornado secure cookie
+ * value String into a {@link TornadoCookieValue}.
  *
  * <p>
  * Due some Tornado secure value string format rules, the de-serialization
  * process could throw a unchecked
- * {@see com.jossemargt.cookietwist.exception.InvalidFormatException}. For
+ * {@link com.jossemargt.cookietwist.exception.InvalidFormatException}. For
  * example in the <code>"2|1:0|10:1521518443|3:foo|4:YmFy|the_signature"</code>
  * secure cookie value String, each field length must match with the leading
  * number.

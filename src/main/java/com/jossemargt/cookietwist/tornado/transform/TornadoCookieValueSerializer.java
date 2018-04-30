@@ -26,8 +26,9 @@ package com.jossemargt.cookietwist.tornado.transform;
 import com.jossemargt.cookietwist.tornado.TornadoCookieValue;
 
 /**
- * A Tornado TornadoCookieValueSerializer object transforms any {@link TornadoCookieValue} instance into
- * its Tornado secure cookie value string representation.
+ * A TornadoCookieValueSerializer object transforms any
+ * {@link TornadoCookieValue} instance into its Tornado secure cookie value
+ * string representation.
  *
  * <p>
  * <strong>Note:</strong> The cookie value signature should be calculated by
@@ -39,7 +40,8 @@ public interface TornadoCookieValueSerializer {
      * Transforms a {@link TornadoCookieValue} into a Tornado secure cookie value
      * String.
      *
-     * @param model the Tornado Cookie object representation
+     * @param model
+     *            the Tornado Cookie object representation
      * @return the Tornado secure cookie value String
      */
     String serialize(TornadoCookieValue model);
