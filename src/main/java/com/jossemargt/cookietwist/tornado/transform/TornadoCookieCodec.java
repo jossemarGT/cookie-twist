@@ -24,7 +24,7 @@
 package com.jossemargt.cookietwist.tornado.transform;
 
 import java.security.InvalidKeyException;
-import java.util.Date;
+import java.time.Instant;
 
 import javax.servlet.http.Cookie;
 
@@ -171,7 +171,7 @@ public abstract class TornadoCookieCodec {
      */
     private long getTimestamp() {
         if (timestamp == TIMESTAMP_NOW) {
-            return new Date().getTime();
+            return Instant.now().getEpochSecond();
         }
 
         return timestamp;
