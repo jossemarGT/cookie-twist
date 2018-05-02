@@ -30,6 +30,9 @@ repositories {
 dependencies {
     api 'javax.servlet:javax.servlet-api:3.1.0'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.8+'
+    testImplementation 'org.powermock:powermock-module-junit4:1.7+'
+    testImplementation 'org.powermock:powermock-api-mockito2:1.7+'
     testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
 }
 

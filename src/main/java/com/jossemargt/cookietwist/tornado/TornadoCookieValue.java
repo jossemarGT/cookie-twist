@@ -173,6 +173,7 @@ public final class TornadoCookieValue {
          *            a Date instance that holds the UNIX epoch timestamp
          * @return the builder
          */
+        @Deprecated
         public TornadoCookieValueBuilder withTimestamp(Date timestamp) {
             this.timestamp = timestamp.getTime();
             return this;
