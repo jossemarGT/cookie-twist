@@ -24,7 +24,6 @@
 package com.jossemargt.cookietwist.signature;
 
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
 import java.util.Formatter;
 
 import javax.crypto.Mac;
@@ -51,6 +50,8 @@ public abstract class SignatureHasher {
      *
      * @param secret
      *            the secret String UTF-8 encoded
+     * @throws IllegalArgumentException
+     *             when the secret key is a null or empty String value.
      */
     public SignatureHasher(String secret) {
         if (secret == null || secret.isEmpty()) {
@@ -65,6 +66,9 @@ public abstract class SignatureHasher {
      * @param values
      *            the sequence of values from where the signature will be computed
      * @return the formatted hexadecimal string
+     * @throws IllegalStateException
+     *             when this method is called from an un-initialized signature
+     *             hasher
      */
     public String computeSignature(String... values) {
         if (!initialized) {
@@ -88,11 +92,10 @@ public abstract class SignatureHasher {
      * Initializes the {@link Mac} instance with an specific symmetric signature
      * algorithm and the secret key.
      *
-     * @throws InvalidKeyException
-     *             the invalid key exception is thrown when a the {@link Mac} is
-     *             initialized with an invalid secret key.
+     * @throws IllegalArgumentException
+     *             when a the {@link Mac} is initialized with an invalid secret key.
      */
-    public abstract void init() throws InvalidKeyException;
+    public abstract void init();
 
     /**
      * To hex string, transforms a byte array to its hexadecimal String

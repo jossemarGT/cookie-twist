@@ -23,7 +23,6 @@
  */
 package com.jossemargt.cookietwist.tornado.transform;
 
-import java.security.InvalidKeyException;
 import java.time.Instant;
 
 import javax.servlet.http.Cookie;
@@ -126,6 +125,9 @@ public abstract class TornadoCookieCodec {
      *
      * @param source
      *            the signed {@link Cookie} to be transformed
+     * @throws InvalidFormatException
+     *             if the secure cookie value String does not comply with a format
+     *             rule.
      * @return the {@link Cookie} with the plain text value
      */
     public Cookie decodeCookie(Cookie source) {
@@ -148,6 +150,9 @@ public abstract class TornadoCookieCodec {
      *
      * @param cookieValue
      *            the cookie value to be signed
+     * @throws InvalidFormatException
+     *             (Tornado V2 only) when the required hasher version by the secure
+     *             Cookie value representation could not be found
      * @return the signature string of the given {@link TornadoCookieValue}
      */
     protected abstract String computeSignature(TornadoCookieValue cookieValue);
@@ -157,6 +162,9 @@ public abstract class TornadoCookieCodec {
      *
      * @param source
      *            the {@link Cookie} with a Tornado signed value
+     * @throws InvalidFormatException
+     *             (Tornado V2 only) when the {@link Cookie} name doesn't match with
+     *             the secure Cookie value representation
      * @return the {@link TornadoCookieValue} from the {@link Cookie}'s Tornado
      *         signed value
      */
@@ -198,7 +206,7 @@ public abstract class TornadoCookieCodec {
         /**
          * Instantiates a new {@link TornadoCookieCodec} builder.
          */
-        public Builder() {
+        protected Builder() {
             this.timestamp = 0;
         }
 
@@ -215,14 +223,24 @@ public abstract class TornadoCookieCodec {
         }
 
         /**
+         * Adds a SignatureHasher object with the given secret key in the hasherList to
+         * be use by the {@link TornadoCookieCodec} instance.
+         *
+         * @param secretKey
+         *            the secret key String.
+         * @return the builder
+         */
+        public abstract T withSecretKey(String secretKey);
+
+        /**
          * Builds the {@link TornadoCookieCodec} instance.
          *
          * @return the {@link TornadoCookieCodec} instance
-         * @throws InvalidKeyException
-         *             when a Invalid secret key was provided to the SignatureHasher in
-         *             the {@link TornadoCookieCodec} instance.
+         * @throws IllegalArgumentException
+         *             when a the {@link TornadoCookieCodec} is initialized with an
+         *             invalid secret key.
          */
-        public abstract TornadoCookieCodec build() throws InvalidKeyException;
+        public abstract TornadoCookieCodec build();
 
         /**
          * Replacement method for the <code>this</code> reference.

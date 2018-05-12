@@ -59,16 +59,14 @@ public class Sha1SignatureHasher extends SignatureHasher {
      * @see com.jossemargt.cookietwist.signature.SignatureHasher#init()
      */
     @Override
-    public void init() throws InvalidKeyException {
+    public void init() {
         SecretKeySpec signingKey = new SecretKeySpec(this.hmacSecretKey, HMAC_SHA1_ALGORITHM);
         try {
             hasher = Mac.getInstance(HMAC_SHA1_ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            // This should not happen
-            e.printStackTrace();
-        } finally {
             hasher.init(signingKey);
             this.initialized = true;
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 

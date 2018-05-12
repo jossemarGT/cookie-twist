@@ -172,6 +172,9 @@ public final class TornadoCookieValue {
          * @param timestamp
          *            a Date instance that holds the UNIX epoch timestamp
          * @return the builder
+         *
+         * @deprecated the TornadoCookieValue will only handle epoch UNIX timestamp as a
+         *             long value since version 0.2.0
          */
         @Deprecated
         public TornadoCookieValueBuilder withTimestamp(Date timestamp) {
