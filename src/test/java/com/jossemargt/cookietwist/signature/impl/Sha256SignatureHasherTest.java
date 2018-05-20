@@ -28,13 +28,19 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.security.InvalidKeyException;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.jossemargt.cookietwist.signature.SignatureHasher;
+
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import net.jodah.concurrentunit.Waiter;
 
 @RunWith(JUnitParamsRunner.class)
 public class Sha256SignatureHasherTest {
@@ -84,6 +90,34 @@ public class Sha256SignatureHasherTest {
     private Object parametersForTestInit() {
         return new Object[] { new Object[] { "" }, new Object[] { null } };
 
+    }
+
+    @Test
+    public void concurrentTest() throws TimeoutException, InvalidKeyException {
+        final Waiter waiter = new Waiter();
+        final String[][] valueGrid = new String[][] {
+                new String[] { "09958263c46fde29c341ece86496314d7680eee3df9a04e7845b2bc8c16e3792", "1", "2", "3" },
+                new String[] { "552c8e8474e35f830feff11484e78e36dee95baeed93831a54619413241874fa", "v1", "v2", "v3" },
+                new String[] { "09958263c46fde29c341ece86496314d7680eee3df9a04e7845b2bc8c16e3792", "1", "2", "3" },
+                new String[] { "552c8e8474e35f830feff11484e78e36dee95baeed93831a54619413241874fa", "v1", "v2", "v3" },
+                new String[] { "09958263c46fde29c341ece86496314d7680eee3df9a04e7845b2bc8c16e3792", "1", "2", "3" },
+                new String[] { "552c8e8474e35f830feff11484e78e36dee95baeed93831a54619413241874fa", "v1", "v2", "v3" },
+                new String[] { "09958263c46fde29c341ece86496314d7680eee3df9a04e7845b2bc8c16e3792", "1", "2", "3" },
+                new String[] { "552c8e8474e35f830feff11484e78e36dee95baeed93831a54619413241874fa", "v1", "v2", "v3" } };
+
+        final SignatureHasher subject = new Sha256SignatureHasher(secretkey);
+        subject.init();
+
+        for (String[] values : valueGrid) {
+            new Thread(() -> {
+                String expectedSignature = values[0];
+                String computedSignature = subject.computeSignature(Arrays.copyOfRange(values, 1, values.length));
+                waiter.assertEquals(expectedSignature, computedSignature);
+                waiter.resume();
+            }).start();
+        }
+
+        waiter.await(10, TimeUnit.SECONDS, valueGrid.length);
     }
 
 }

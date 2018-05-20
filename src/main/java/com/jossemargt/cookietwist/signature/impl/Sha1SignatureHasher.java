@@ -68,6 +68,7 @@ public class Sha1SignatureHasher extends SignatureHasher {
             e.printStackTrace();
         } finally {
             hasher.init(signingKey);
+            this.initialized = true;
         }
     }
 

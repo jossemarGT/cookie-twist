@@ -42,6 +42,9 @@ public abstract class SignatureHasher {
     /** The hasher instance from {@link Mac}. */
     protected Mac hasher;
 
+    /** The initialized variable flags the hasher instance state. **/
+    protected boolean initialized = false;
+
     /**
      * Instantiates a new signature hasher with a secret key String and a
      * un-initialized {@link Mac} instance.
@@ -64,11 +67,21 @@ public abstract class SignatureHasher {
      * @return the formatted hexadecimal string
      */
     public String computeSignature(String... values) {
-        for (String v : values) {
-            hasher.update(v.getBytes(StandardCharsets.UTF_8));
+        if (!initialized) {
+            throw new IllegalStateException("Un-initialized signature hasher");
         }
 
-        return toHexString(hasher.doFinal());
+        byte[] result;
+
+        synchronized (hasher) {
+            for (String v : values) {
+                hasher.update(v.getBytes(StandardCharsets.UTF_8));
+            }
+
+            result = hasher.doFinal();
+        }
+
+        return toHexString(result);
     }
 
     /**
