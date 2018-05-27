@@ -23,8 +23,6 @@
  */
 package com.jossemargt.cookietwist.tornado.transform.impl;
 
-import java.security.InvalidKeyException;
-
 import javax.servlet.http.Cookie;
 
 import com.jossemargt.cookietwist.signature.SignatureHasher;
@@ -107,14 +105,13 @@ public final class V1TornadoCookieCodec extends TornadoCookieCodec {
             this.deserializer = new V1TornadoCookieValueDeserializer();
         }
 
-        /**
-         * Sets the SignatureHasher object to be use by the {@link V1TornadoCookieCodec}
-         * instance with the given secret key.
+        /*
+         * (non-Javadoc)
          *
-         * @param secretKey
-         *            the secret key String.
-         * @return the builder
+         * @see com.jossemargt.cookietwist.tornado.transform.TornadoCookieCodec.Builder#
+         * withSecretKey()
          */
+        @Override
         public Builder withSecretKey(String secretKey) {
             hasher = new Sha1SignatureHasher(secretKey);
             return self();
@@ -127,7 +124,7 @@ public final class V1TornadoCookieCodec extends TornadoCookieCodec {
          * com.jossemargt.cookietwist.tornado.transform.TornadoCookieCodec.Builder#build
          */
         @Override
-        public TornadoCookieCodec build() throws InvalidKeyException {
+        public TornadoCookieCodec build() {
             hasher.init();
             return new V1TornadoCookieCodec(this);
         }

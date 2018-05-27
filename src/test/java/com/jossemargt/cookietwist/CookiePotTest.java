@@ -23,19 +23,38 @@
  */
 package com.jossemargt.cookietwist;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import org.junit.Ignore;
+import java.security.InvalidKeyException;
+
 import org.junit.Test;
 
-@Ignore
+import com.jossemargt.cookietwist.tornado.transform.TornadoCookieCodec;
+import com.jossemargt.cookietwist.tornado.transform.impl.V1TornadoCookieCodec;
+import com.jossemargt.cookietwist.tornado.transform.impl.V2TornadoCookieCodec;
+
 public class CookiePotTest {
 
-    @Test public void encodeCookie() {
-        fail("Not yet implemented"); // TODO
-    }
-    
-    @Test public void decodeCookie() {
-        fail("Not yet implemented"); // TODO
+    private String secretKey = "not-so-secret";
+
+    @Test
+    public void getBuilderFor() throws InvalidKeyException {
+        TornadoCookieCodec tcc;
+
+        for (CookieSignatureAlgorithm algorithm : CookieSignatureAlgorithm.values()) {
+            switch (algorithm) {
+            case TORNADO_V1:
+                tcc = CookiePot.getBuilderFor(algorithm).withSecretKey(secretKey).build();
+                assertTrue(tcc instanceof V1TornadoCookieCodec);
+                break;
+            case TORNADO_V2:
+                tcc = CookiePot.getBuilderFor(algorithm).withSecretKey(secretKey).build();
+                assertTrue(tcc instanceof V2TornadoCookieCodec);
+                break;
+            default:
+                fail(String.format("Unexpected signature algorithm: %s", algorithm));
+            }
+        }
     }
 }

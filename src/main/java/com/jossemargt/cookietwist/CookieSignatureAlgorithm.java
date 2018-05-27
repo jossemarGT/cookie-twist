@@ -23,40 +23,15 @@
  */
 package com.jossemargt.cookietwist;
 
-import com.jossemargt.cookietwist.tornado.transform.TornadoCookieCodec.Builder;
-import com.jossemargt.cookietwist.tornado.transform.impl.V1TornadoCookieCodec;
-import com.jossemargt.cookietwist.tornado.transform.impl.V2TornadoCookieCodec;
-
 /**
- * The utility Class CookiePot facilitates any supported Cookie codec creation.
- *
- * @author Jonnatan Jossemar Cordero
+ * The Enum CookieSignatureAlgorithm lists all the Cookie signature methods
+ * supported by the library.
  */
-public final class CookiePot {
+public enum CookieSignatureAlgorithm {
 
-    /**
-     * Instantiates a new cookie pot.
-     */
-    private CookiePot() {
-        // Hides this utility class constructor
-    }
-
-    /**
-     * Gets the CookieCodec builder for the given Signature Algorithm type.
-     *
-     * @param supportedSignature
-     *            the enum that represents the desired secure cookie signature
-     *            algorithm to use
-     * @return the builder based on the given CookieSignatureAlgorithm
-     */
-    public static Builder<?> getBuilderFor(CookieSignatureAlgorithm supportedSignature) {
-        switch (supportedSignature) {
-        case TORNADO_V1:
-            return V1TornadoCookieCodec.builder();
-        default:
-        case TORNADO_V2:
-            return V2TornadoCookieCodec.builder();
-        }
-    }
+    /** The Tornado Secure Cookie Signature algorithm V1. */
+    TORNADO_V1,
+    /** The Tornado Secure Cookie Signature algorithm V2. */
+    TORNADO_V2
 
 }
